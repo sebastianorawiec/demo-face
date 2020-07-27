@@ -1,0 +1,10 @@
+ver 1.1
+- fix - added face detection for new uploaded person photo, during adding person to face recognition DB
+- fix - changed method for thumbs generation , thumbs were distorted
+- fix - changed method for google link generation, now google search by images in google is possible.
+- protected /adm interface with basic auth
+- added sending Authorization headers to Azure in interceptor
+- refactoring, removed person_photos tables and mapping between persons, we assumed for demo purposes we add one photo for person
+- added jasypt encryption for azure api key
+
+

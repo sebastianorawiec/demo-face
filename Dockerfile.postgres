@@ -1,0 +1,6 @@
+FROM postgres
+COPY docker/init.sql /init.sql
+RUN apt-get update && apt-get install -y cron
+RUN echo "*/5 * * * * /usr/bin/pg_dump -d demo_face -Upostgres > /docker-entrypoint-initdb.d/init.sql" | crontab
+COPY docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/js/bootstrap.min.js"  ></script>
+    <script src="/js/bootstrap.bundle.min.js" ></script>
+    <script src="/js/util.js" ></script>
+</head>
+<body style="align-content: center;">
+
+
+<div th:insert="error :: error">  </div>
+
+<div  style="align-content: center ; margin: 10px" th:if="${person}" >
+    <img id="personphoto" th:src="${person.photo}" th:data-googleurl="${person.photoFullUrl}"/>
+    <br/>
+    <div th:switch="${person.personName}" >
+        <p th:case="null">We could not find this person in our database.</p>
+        <p th:case="*" > We've recognized this person! It's <span th:text="${person.personName}">  </span> </p>
+    </div>
+    <p>Click on photo in order to find more info in Google</p>
+</div>
+
+<div style="align-content: center; width: 40%; margin: 10px" >
+    <p>Please upload person photo, we will match it against our faces Database</p>
+    <form action="#" th:action="@{/}"  style="width: 50%"  method="post" enctype="multipart/form-data">
+        <div class="custom-file">
+            <label class="custom-file-label" for="file">Please Upload photo</label>
+            <input class="custom-file-input" type="file" name="photo"  id="file" accept="image/jpeg" />
+        </div>
+        <br/><br/>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Find">
+        </div>
+    </form>
+</div>
+</body>
+</html>

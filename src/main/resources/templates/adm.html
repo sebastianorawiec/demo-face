@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/js/bootstrap.min.js"  ></script>
+    <script src="/js/bootstrap.bundle.min.js" ></script>
+    <script src="/js/util.js" ></script>
+</head>
+<body>
+
+<div th:insert="navbar :: navbar">  </div>
+<div th:insert="error :: error">  </div>
+
+<div th:switch="${persons}"  style="width: 50%; alignment: center;">
+    <p th:case="null">Persons DB is empty</p>
+    <div th:case="*">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Photo</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="person : ${persons}">
+                <td th:text="${person.name}" style="width: 30%"></td>
+                <td style="width: 60%"> <img th:height="100px" th:src="${person.thumbUrl}" > </td>
+                <td style="width: 10%"><a href="#" th:data-id="${person.id}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <!-- pagination -->
+        <nav aria-label="Pagination" th:if="${persons.totalPages gt 0}">
+            <ul class="pagination justify-content-center font-weight-bold">
+                <li class="page-item" th:classappend="${persons.number eq 0} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{/adm/?page={id}(id=${persons.number lt 2 ? 1 : customers.number})}"
+                       aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:classappend="${i eq persons.number + 1} ? 'active'"
+                    th:each="i : ${#numbers.sequence( 1, persons.totalPages, 1)}">
+                    <a class="page-link" th:href="@{/adm/?page={id}(id=${i})}" th:text="${i}"
+                       th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+                </li>
+                <li class="page-item" th:classappend="${persons.number + 1 eq persons.totalPages} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{/?page={id}(id=${persons.number + 2})}"
+                       aria-label="Next" title="Next Page" data-toggle="tooltip">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+
+    </div>
+
+</div>
+
+
+<div id="confirm" title="">
+    <p>Are you sure?</p>
+</div>
+
+</body>

@@ -1,0 +1,29 @@
+version: '3.1'
+services:
+  dbpostgresql:
+    image: dokcerregistryseba.azurecr.io/postgres-facedemo:latest
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ${WEBAPP_STORAGE_HOME}/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=demo_face
+    restart: always
+  app:
+    container_name: demo-face
+    image: dokcerregistryseba.azurecr.io/facedemo1:latest
+    ports:
+      - 80:8080
+    environment:
+      - ENCPASS:${ENCPASS}
+    volumes:
+      - ${WEBAPP_STORAGE_HOME}/appdata:/usr/app/data
+      - ${WEBAPP_STORAGE_HOME}/appdata/detect:/usr/app/data/detect
+    depends_on:
+      - dbpostgresql
+    restart: always
+
+volumes:
+  postgres-data:
+
