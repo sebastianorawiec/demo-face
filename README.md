@@ -9,10 +9,15 @@ https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-late
 
 
 after login to azure - create face recognition service 
+
 az login
+
 az group create --name ResourceGroup1 --location "West Europe"
+
 az appservice plan create --name myAppServicePlan --resource-group ResourceGroup1 --sku S1 --is-linux
+
 az cognitiveservices account create -n <name> -g ResourceGroup1 --kind Face --sku S0 -l WestEurope --yes
+
 az cognitiveservices account keys list --name <name> -g ResourceGroup1 
 
 Now we need to create persons gruop
@@ -31,18 +36,25 @@ In order to deploy in Azure app services
 
 #docker registry
 az acr create --name <your docker registry> --resource-group ResourceGroup1 --sku Basic --admin-enabled true 
+
 az acr credential show --name dokcerregistryseba
+
 docker login <your docker registry>.azurecr.io --username <your docker registry>
 
 #make custom postgres image
 docker build  -t  postgres-facedemo -f Dockerfile.postgres .
+
 docker tag postgres-facedemo dokcerregistryseba.azurecr.io/postgres-facedemo
+
 docker push <your docker registry>.azurecr.io/postgres-facedemo
 
 
 #build docker for app
+
 mvn clean package 
+
 docker tag facedemo1 <your docker registry>.azurecr.io/facedemo1
+
 docker push <your docker registry>.azurecr.io/facedemo1
 
 or 
@@ -66,7 +78,9 @@ change in dokcer docker-compose-azure.yml  urls to Your registry
 
 
 az webapp create --resource-group ResourceGroup1 --plan myAppServicePlan --name <appname> --multicontainer-config-type compose --multicontainer-config-file docker-compose-azure.yml 
+
 az webapp deployment container config --enable-cd true --name <appname>--resource-group ResourceGroup1
+
 az webapp config appsettings set --name <appname> --resource-group ResourceGroup1 --settings ENCPASS='password used for jasypt' DOCKER_REGISTRY_SERVER_PASSWORD='password' DOCKER_REGISTRY_SERVER_URL='https://yourregistry.azurecr.io' DOCKER_REGISTRY_SERVER_USERNAME='name'
 
 # Diagnostic
