@@ -111,9 +111,7 @@ Ctrl + C to close
 we can connect and even create tunnel to our postgre sql database
 
 ssh root@localhost  -c aes256-cbc -p 44135 -L5555:dbpostgresql:5432 
-The authenticity of host '[localhost]:44135 ([127.0.0.1]:44135)' can't be established.
-ECDSA key fingerprint is SHA256:MPk7xB1IJ9NefQB5qEi/Br55nIYFDHyefUzjgwM8+HA.
-Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-Warning: Permanently added '[localhost]:44135' (ECDSA) to the list of known hosts.
+
 root@localhost's password: 
+
 root@ced822760293:~#  
