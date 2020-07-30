@@ -30,7 +30,7 @@ next pls start You application with  -Djasypt.encryptor.password=herepassword
 https://www.devglan.com/online-tools/jasypt-online-encryption-decryption
 
 # Deployment to Azure
-------
+
 
 In order to deploy in Azure app services
 
@@ -84,7 +84,6 @@ az webapp deployment container config --enable-cd true --name <appname>--resourc
 az webapp config appsettings set --name <appname> --resource-group ResourceGroup1 --settings ENCPASS='password used for jasypt' DOCKER_REGISTRY_SERVER_PASSWORD='password' DOCKER_REGISTRY_SERVER_URL='https://yourregistry.azurecr.io' DOCKER_REGISTRY_SERVER_USERNAME='name'
 
 # Diagnostic
------
 
 
 credentials for accessing dignostic web page 
