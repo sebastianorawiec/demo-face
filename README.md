@@ -2,6 +2,7 @@
 Demo application allow to upload images - photos and next recognize persons on photos base on Azure AI solution for faces detection/recognition 
 
 
+# How to build ?
 before You start install azure cli, docker, docker compose and make free azure account 
 cli can be downloaded from here 
 https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest 
@@ -14,13 +15,16 @@ az appservice plan create --name myAppServicePlan --resource-group ResourceGroup
 az cognitiveservices account create -n <name> -g ResourceGroup1 --kind Face --sku S0 -l WestEurope --yes
 az cognitiveservices account keys list --name <name> -g ResourceGroup1 
 
-## create group 
+Now we need to create persons gruop
+
 curl -v -X PUT -H "Content-Type: application/json" -H "Ocp-Apim-Subscription-Key: <here You api key>" https://<name>.cognitiveservices.azure.com/face/v1.0/persongroups/group1 --data '{"name": "group1", "recognitionModel": "recognition_02"}'
 
 You have  to add API key and url of service  to properties files but pls encrypt it before with jasypt 
 next pls start You application with  -Djasypt.encryptor.password=herepassword
 
+https://www.devglan.com/online-tools/jasypt-online-encryption-decryption
 
+# Deployment to Azure
 ------
 
 In order to deploy in Azure app services
@@ -65,8 +69,9 @@ az webapp create --resource-group ResourceGroup1 --plan myAppServicePlan --name 
 az webapp deployment container config --enable-cd true --name <appname>--resource-group ResourceGroup1
 az webapp config appsettings set --name <appname> --resource-group ResourceGroup1 --settings ENCPASS='password used for jasypt' DOCKER_REGISTRY_SERVER_PASSWORD='password' DOCKER_REGISTRY_SERVER_URL='https://yourregistry.azurecr.io' DOCKER_REGISTRY_SERVER_USERNAME='name'
 
+# Diagnostic
 -----
-Diagnostic
+
 
 credentials for accessing dignostic web page 
 
