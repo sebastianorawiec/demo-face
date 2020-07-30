@@ -29,6 +29,10 @@ next pls start You application with  -Djasypt.encryptor.password=herepassword
 
 https://www.devglan.com/online-tools/jasypt-online-encryption-decryption
 
+
+for local development pls strat DB , docker-compose -f docker/docker-compose.yml up -d
+
+
 # Deployment to Azure
 
 
